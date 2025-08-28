@@ -1,33 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-  -->
   <base href="/">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="description" content="نظام البيرق SSB">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="albayraq_ssb">
+  <meta name="apple-mobile-web-app-title" content="البيرق SSB">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png" />
 
-  <title>albayraq_ssb</title>
+  <title>البيرق SSB</title>
   <link rel="manifest" href="manifest.json">
 
   <!-- Firebase SDK -->
@@ -35,6 +26,117 @@
   <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js"></script>
+
+  <style>
+    /* Loading screen styles */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      direction: rtl;
+    }
+
+    .loading-container {
+      max-width: 400px;
+      padding: 2rem;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .logo {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 1.5rem;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    h1 {
+      margin: 0 0 1rem 0;
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 0 0 2rem 0;
+      opacity: 0.9;
+      font-size: 1rem;
+    }
+
+    .progress-container {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #4fc3f7 0%, #29b6f6 100%);
+      border-radius: 3px;
+      animation: loading 2s ease-in-out infinite;
+    }
+
+    .loading-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      animation: dotPulse 1.5s ease-in-out infinite;
+    }
+
+    .dot:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .dot:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes loading {
+      0% { width: 0%; }
+      50% { width: 70%; }
+      100% { width: 100%; }
+    }
+
+    @keyframes dotPulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.2); opacity: 1; }
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    #flutter-app {
+      width: 100%;
+      height: 100vh;
+    }
+  </style>
 
   <script>
     // Your Firebase configuration
@@ -55,7 +157,67 @@
 </head>
 
 <body>
-  <script src="flutter_bootstrap.js" async></script>
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <div class="loading-container">
+      <div class="logo">البيرق</div>
+      <h1>نظام البيرق SSB</h1>
+      <p>جاري تحميل التطبيق، يرجى الانتظار...</p>
+      <div class="progress-container">
+        <div class="progress-bar"></div>
+      </div>
+      <div class="loading-dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Flutter App -->
+  <div id="flutter-app" class="hidden">
+    <script src="flutter_bootstrap.js" async></script>
+  </div>
+
+  <script>
+    // Hide loading screen when Flutter app is ready
+    window.addEventListener('load', function() {
+      // Simulate minimum loading time (2 seconds)
+      setTimeout(function() {
+        const loadingScreen = document.getElementById('loading-screen');
+        const flutterApp = document.getElementById('flutter-app');
+        
+        if (loadingScreen && flutterApp) {
+          loadingScreen.classList.add('hidden');
+          flutterApp.classList.remove('hidden');
+        }
+      }, 2000);
+    });
+
+    // Handle errors
+    window.addEventListener('error', function() {
+      const loadingScreen = document.getElementById('loading-screen');
+      if (loadingScreen) {
+        loadingScreen.innerHTML = `
+          <div class="loading-container">
+            <div class="logo">!</div>
+            <h1>حدث خطأ</h1>
+            <p>تعذر تحميل التطبيق. يرجى تحديث الصفحة أو المحاولة لاحقاً.</p>
+            <button onclick="window.location.reload()" style="
+              background: rgba(255, 255, 255, 0.2);
+              border: none;
+              padding: 0.75rem 1.5rem;
+              border-radius: 6px;
+              color: white;
+              font-weight: 500;
+              cursor: pointer;
+              margin-top: 1rem;
+            ">إعادة المحاولة</button>
+          </div>
+        `;
+      }
+    });
+  </script>
 </body>
 
 </html>
