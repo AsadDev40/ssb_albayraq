@@ -30,11 +30,23 @@
   <title>albayraq_ssb</title>
   <link rel="manifest" href="manifest.json">
 
+  <!-- Google Maps JavaScript API -->
+  <script>
+    function initGoogleMaps() {
+      // This function will be called when Google Maps API is loaded
+      console.log('Google Maps API loaded successfully');
+    }
+  </script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsjcyLdg2j_nfMqesZdJyX_REeAPug5gE&callback=initGoogleMaps">
+    </script>
+
   <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-storage-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-messaging-compat.js"></script>
 
   <script>
     // Your Firebase configuration
